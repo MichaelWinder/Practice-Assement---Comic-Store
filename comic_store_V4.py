@@ -70,23 +70,24 @@ def sell_comic():
     while comic is None:  # Loop to keep asking for comic input until a
         # valid one is given
         comic = find_comic()
-    while True:
+    while True:  # Loop for error checking on the sell amount
         try:
             sell_amount = int(input(f"Enter the amount of "
                                     f"{comic.comic} Comics that have"
                                     f" been sold: "))
-        except ValueError:
+        except ValueError:  # If value isn't a number
             print(f"Error: Value must be an integer\n")
         else:
-            if sell_amount < 0:
+            if sell_amount < 0:  # If value is less the 0
                 print(f"Error: Value must be greater than 0\n")
                 continue
-            if sell_amount > comic.num_of_copies:
+            if sell_amount > comic.num_of_copies:  # If value is greater
+                # than comics stored in the inventory
                 print(f"Error: Sell amount must not be greater than copies "
                       f"on hand ({comic.num_of_copies})\n")
                 continue
             break
-    comic.num_of_copies -= sell_amount
+    comic.num_of_copies -= sell_amount  # Changes values once error checked
     comic.total_sold += sell_amount
     print(f"{sell_amount} copy(s) of {comic.comic} was sold")
 
@@ -94,21 +95,22 @@ def sell_comic():
 # Records the restocking of a comic
 def restock_comic():
     comic = None
-    while comic is None:
+    while comic is None:  # Loop to keep asking for comic input until a
+        # valid one is given
         comic = find_comic()
     while True:
         try:
             restock_amount = int(input(f"Enter the amount of "
                                        f"{comic.comic} Comics that "
                                        f"have been restocked: "))
-        except ValueError:
+        except ValueError:  # If value isn't a number
             print(f"Error: Value must be an integer\n")
         else:
-            if restock_amount < 0:
-                print(f"Error: Value must be an integer\n")
+            if restock_amount < 0:  # If value is less the 0
+                print(f"Error: Value must be greater than 0\n")
                 continue
             break
-    comic.num_of_copies += restock_amount
+    comic.num_of_copies += restock_amount  # Changes values once error checked
     print(f"{restock_amount} copy(s) of {comic.comic} was "
           f"restocked\n")
 
@@ -117,7 +119,7 @@ def restock_comic():
 def menu():
     userChoice = ""
     print("Welcome")
-    while userChoice != "Q":
+    while userChoice != "Q":  # Loop to keep asking questions
         print("What function would you like to run?")
         print("Type 1 to find a Comic")
         print("Type 2 to record a sale of a comic")
@@ -140,9 +142,11 @@ def menu():
             for comic in comic_list:
                 comic.display_info()
         print()
-    save_inventory("comic_store_inventory.txt")
+    save_inventory("comic_store_inventory.txt")  # Saves the inventory at
+    # the end of the program
 
 
 # Main Routine
 comic_list: list[Comic] = load_inventory("comic_store_inventory.txt")
+# Runs load_inventory to create the comic list
 menu()
