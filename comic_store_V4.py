@@ -98,7 +98,7 @@ def restock_comic():
     while comic is None:  # Loop to keep asking for comic input until a
         # valid one is given
         comic = find_comic()
-    while True:
+    while True:  # Loop for error checking on the restock amount
         try:
             restock_amount = int(input(f"Enter the amount of "
                                        f"{comic.comic} Comics that "
